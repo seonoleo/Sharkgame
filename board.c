@@ -82,7 +82,7 @@
                  flag_allocated=1;
              } 
            }
-          while(flag_allocated==0)
+          while(flag_allocated==0);
                  //rand coin
                  if()
                  {

@@ -29,8 +29,7 @@ int main(int argc, char *argv[])
   
   //step2 turm play (do-while)
   cnt=0;
-  pos=0;
-  int 
+  pos=0; 
   do
   {
         int die_result;
@@ -38,20 +37,21 @@ int main(int argc, char *argv[])
         
         
   //2-1 status printing
-  board_printBoardStatus();
+        board_printBoardStatus();
   
   //2-2 roll die
-  die_result=rolldie();
+        die_result=rolldie();
   
   //2-3 move(result)
-  pos+=die_result;
-  printf("pos: %i (die:%i)\n", pos, die_result);
+        pos += die_result;
+        printf("pos: %i (die:%i)\n", pos, die_result);
   
-  coinResult = board_getBoardCoin(pos);
+        coinResult = board_getBoardCoin(pos);
   
-  printf("coin:%i\n");
+        printf("coin:%i\n");
   
   //2-4 change turn, shark move
+        cnt++;
   
  } while(cnt<5);
   //step3 game end
