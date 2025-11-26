@@ -81,7 +81,7 @@ void  initPlayer(void)
               
               player_position[i]=0;
               player_coin[i]=0;
-              player_status[N_PLAYER]=PLAYERSTATUS_LIVE;  
+              player_status[i]=PLAYERSTATUS_LIVE;  
               
               printf("Player %i's name: ", i);
               scanf( "%s", player_name[i] );
@@ -99,26 +99,27 @@ int gameEnd(void)
       for(i=0;i<N_PLAYER;i++)
       {
               if(player_status[i] == PLAYERSTATUS_LIVE)
-              flag_end =0;
-                   
-                             
+                 flag_end =0;                                 
       }
     return flag_end;
 }
-#if 0
+
 void checkDie(void)
 {
      int i;
      
      for(i=0;i<N_PLAYER;i++)
      {
-           if( board_getBoardStatus(player_position[i]) == BOARDSTATUS_NOK;)
-              {    player_status[i] = PLAYERSTATUS_DIE;
-                  printf("So Sad! %s died at 
+           if( board_getBoardStatus(player_position[i]) == BOARDSTATUS_NOK)
+              {   
+                  player_status[i] = PLAYERSTATUS_DIE;
+                  printf("So Sad! %s died at position %i\n", 
+                  player_name[i], player_position[i]);
               }
+     }
                   
 }
-#endif
+
 
 int rolldie(void)
 {
@@ -134,6 +135,7 @@ int main(int argc, char *argv[])
   
   srand((unsigned)(time(NULL)));
   
+  //opening
   printf("===============================================\n");
   printf("&@&@&@&@&@&@&@&@&@&@&@&@&@&@&@&@&@&@&@&@&@&@&@&\n");
   printf("&@&@      *3*   SHARK ISLAND GAME   *3*    &@&@\n");
@@ -157,7 +159,7 @@ int main(int argc, char *argv[])
         int die_result;
         
         
-        //
+        
         
         if(player_status[turn] != PLAYERSTATUS_LIVE)
         {
@@ -180,7 +182,7 @@ int main(int argc, char *argv[])
         printf("Press any key to roll a die!\n");
         scanf("%d", &dum);
         fflush(stdin);
-        die_result=rolldie();
+        die_result = rolldie();
         
         
         
@@ -198,8 +200,7 @@ int main(int argc, char *argv[])
   
 
         player_coin[turn] += board_getBoardCoin(player_position[turn]);
-        printf("Lucky! %s got %i coins: %i\n", player_name[turn], 
-                                               player_coin[turn]);
+        printf("Lucky! %s got %i coins\n", player_name[turn], player_coin[turn]);
 
   //2-4 change turn, shark move
         turn= (turn+1)%N_PLAYER;
@@ -212,21 +213,44 @@ int main(int argc, char *argv[])
              //check die
              checkDie();        
         }
-        cnt++;
+        
   
- } while(gameEnd() == 0); //game end 
+ } while(gameEnd() == 0); //game end condition
  
-  //step3 game end
+  //step3 game end (winner printing)
+  
+printf("GAME END!!\n");
+
+int winner = -1;
+int Maxcoin = -1;
+
+int i;
+
+for(i=0;i<N_PLAYER;i++) 
+{
+    if (player_status[i] == PLAYERSTATUS_LIVE ||
+    player_status[i] == PLAYERSTATUS_END ) 
+    {           
+        if (player_coin[i] > Maxcoin) 
+        {  
+            Maxcoin = player_coin[i];
+            winner = i;
+        }
+    }
+}
+
+if(winner==-1)
+    printf("No winner! All players died\n");
+else
+printf("winner is %s!\n", player_name[winner]);
+  
+
   
   
   
   
-  
-  
-  
-  
-  
-  printf("\n\n\n\n\n\n\n\n\n\n");
+  //ending
+  printf("\n\n\n\n");
   printf("===============================================\n");
   printf("&@&@&@&@&@&@&@&@&@&@&@&@&@&@&@&@&@&@&@&@&@&@&@&\n");
   printf("&@&@    *3*   SHARK ISLAND GAME END  *3*   &@&@\n");
