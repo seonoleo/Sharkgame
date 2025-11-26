@@ -38,14 +38,6 @@ void printPlayerPosition(int player)
               else
               printf("X");
            }
-           
-           
-           #if 0
-           if (board_status[i] == BOARDSTATUS_NOK)
-             printf("X");
-           else
-             printf("O");
-           #endif
        }
        printf("|\n");
 }
